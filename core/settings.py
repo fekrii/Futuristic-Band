@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     ## Internal
     '_auth',
     'parent',
+    'child',
+    'school'
 ]
 
 REST_FRAMEWORK = {

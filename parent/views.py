@@ -6,6 +6,11 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import ParentProfileSerializer
+from rest_framework import generics, status
+from child.models import ChildProfile
+from child.serializers import ChildProfileSerializer
+from parent.models import ParentProfile
+
 
 
 @api_view(["POST"])
@@ -67,3 +72,15 @@ def register_parent(request):
                 'data': serializer.errors,
                 'message': "User object not created"
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ParentChildListView(generics.ListAPIView):
+    queryset = ChildProfile.objects.all()
+    serializer_class = ChildProfileSerializer
+    
+    def get_queryset(self, *args, **kwargs):
+        child = super().get_queryset(*args, **kwargs).filter(
+            parent__user=self.request.user
+
+        )
+        return child
