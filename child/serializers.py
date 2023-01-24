@@ -1,6 +1,6 @@
 from rest_framework import serializers, exceptions
 from _auth.serializers import CustomUserSerializer
-from .models import ChildProfile
+from .models import ChildProfile, ChildWallet, ChildDaysOff
 from django.db import transaction, IntegrityError
 from django.contrib.auth.hashers import make_password
 from sqlite3 import DataError
@@ -66,3 +66,25 @@ class ChildProfileSerializer(serializers.ModelSerializer):
             else:
                 raise ValidationError("Serializer could not create a user object")
 
+
+
+class ChildWalletSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = ChildWallet
+            fields = [
+                "child",
+                "max_amount",
+                "amount"
+            ]
+
+
+class ChildDaysOffSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = ChildDaysOff
+            fields = [
+                "child",
+                "day",
+                "reason",
+                "approved"
+            ]
+            

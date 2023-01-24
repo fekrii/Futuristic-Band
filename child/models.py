@@ -40,3 +40,15 @@ class ChildWallet(models.Model):
 
     def __str__(self):
         return f'wallet for : {self.child.firstName}'
+
+
+class ChildDaysOff(models.Model):
+    child = models.ForeignKey(ChildProfile, related_name="ChildDayOff", on_delete=models.CASCADE)
+    day = models.DateField()
+    reason = models.CharField(max_length=255, blank=True, null=True)
+    approved = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'day off for : {self.child.firstName}'

@@ -14,6 +14,8 @@ class SchoolProfileSerializer(serializers.ModelSerializer):
         fields = [
             "user",
             "name",
+            "phone_number",
+            "emergency_phone_number",
             "created_at",
             "updated_at"
         ]
