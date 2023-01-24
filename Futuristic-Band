@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "4c0de384-70e7-4416-9125-39b16f32b7f9",
+		"name": "Futuristic Band",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18673655"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"parent2@mail.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/auth/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"auth",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_data\": {\r\n        \"email\": \"user@mail.com\",\r\n        \"phone\": \"01005170441\",\r\n        \"password\": \"test\"\r\n    },\r\n    \"profile\": {\r\n        \"firstName\": \"user one\",\r\n        \"lastName\": \"last one\",\r\n        \"gender\": \"Male\",\r\n        \"birthDate\": \"2019-11-11\",\r\n        \"address\": \"\",\r\n        \"jobTitle\": \"\",\r\n        \"nationality\":\"\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile/my",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/auth/profile/my",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"profile",
+						"my"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0MzExNzk5LCJpYXQiOjE2NjQzMDQ1OTksImp0aSI6ImViYjYyMDI2ODcxYTRlNjFiMDM3ZTU5MWZjMjExZjJhIiwidXNlcl9pZCI6M30.5B8SRbfrBPmvwsK6tI5-pz0glcFmP47jo0edWziFgTM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/auth/profile/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"profile",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parent/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_data\": {\r\n        \"email\": \"parent2@mail.com\",\r\n        \"phone\": \"01005170441\",\r\n        \"password\": \"test\"\r\n    },\r\n    \"profile\": {\r\n        \"firstName\": \"parent two\",\r\n        \"lastName\": \"parent two\",\r\n        \"parent_type\": \"Father\",\r\n        \"birthDate\": \"2019-11-11\",\r\n        \"address\": \"\",\r\n        \"jobTitle\": \"\",\r\n        \"nationality\":\"\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/parent/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"parent",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "school/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_data\": {\n        \"email\": \"school2@mail.com\",\n        \"phone\": \"01005170441\",\n        \"password\": \"test\"\n    },\n    \"profile\": {\n        \"name\": \"school two\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/school/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"school",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "child/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_data\": {\n        \"email\": \"child-2-parent-2@mail.com\",\n        \"phone\": \"01005170441\",\n        \"password\": \"test\",\n        \"parent\":2,\n        \"school\":1\n    },\n    \"profile\": {\n        \"firstName\": \"child-2-parent-2\",\n        \"lastName\": \"child-2-parent-2\",\n        \"birthDate\": \"2019-11-11\",\n        \"child_at\": \"At Bus\",\n        \"banned_food\": [\"oranges\", \"apples\"]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/child/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"child",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parent/childs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0NTY4NTQ2LCJpYXQiOjE2NzQ1NjEzNDYsImp0aSI6IjliZjBmNmNlM2NhMTQ0ZDliOWY2OWM2YmFhZWIzM2Y2IiwidXNlcl9pZCI6MTB9.Aqrntla2N8i-o8fP_eCEpNGl4NYKuRF1BYSMWEIQHJw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/parent/childs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"parent",
+						"childs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
