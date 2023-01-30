@@ -69,10 +69,19 @@ def register_child(request):
                 'message': "User object not created"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-class ChildView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ChildProfile.objects.all()
-    serializer_class = ChildProfileSerializer
+# class ChildView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = ChildProfile.objects.all()
+#     serializer_class = ChildProfileSerializer
 
+class ChildView(APIView):
+    def get(self, request, child_id):
+        child = ChildProfile.objects.get(user_id=child_id)
+        serializer = ChildProfileSerializer(child)
+        return Response({
+            'success': True,
+            'data': serializer.data,
+            'message': f"Data for child {child_id} Retrieved Successfully"
+        })
 
 class ChildWalletList(generics.ListCreateAPIView):
     queryset = ChildWallet.objects.all()
