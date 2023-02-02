@@ -96,21 +96,48 @@ class ChildWalletList(generics.ListCreateAPIView):
 
 class ChildWalletView(APIView):
     def get(self, request, child_id):
-        wallet = ChildWallet.objects.filter(child_id=child_id)
-        serializer = ChildWalletSerializer(wallet, many=True)
+        child = ChildProfile.objects.get(user_id=child_id)
+        try:
+            # check if wallet exist for this child
+            wallet = ChildWallet.objects.get(child=child)
+        except:
+            # if not create it
+            wallet = ChildWallet.objects.create(child=child, amount=0)
+        serializer = ChildWalletSerializer(wallet)
         return Response({
             'success': True,
             'data': serializer.data,
             'message': f"wallet for child with id {child_id}"
         })
     
+    def post(self, request, child_id):
+        
+        try:
+            amount = request.data["amount"]
+            wallet = ChildWallet.objects.get(child__user_id=child_id)
+            wallet.amount += amount
+            wallet.save()
+            serializer = ChildWalletSerializer(wallet)
+            return Response({
+                'success': True,
+                'data': serializer.data,
+                'message': f"amount of {amount} has been added to child with id {child_id}"
+            })
+        except:
+            return Response({
+                'success': False,
+                'data': None,
+                'message': "amount must be provided"
+            })
+
     def put(self, request, child_id):
         
         try:
             amount = request.data["amount"]
-            wallet = ChildWallet.objects.filter(child_id=child_id)
+            wallet = ChildWallet.objects.get(child__user_id=child_id)
             wallet.amount = amount
-            serializer = ChildWalletSerializer(wallet, many=True)
+            wallet.save()
+            serializer = ChildWalletSerializer(wallet)
             return Response({
                 'success': True,
                 'data': serializer.data,
@@ -127,7 +154,7 @@ class ChildWalletView(APIView):
 
 class BannedFoodView(APIView):
     def get(self, request, child_id):
-        child = ChildProfile.objects.get(id=child_id)
+        child = ChildProfile.objects.get(user_id=child_id)
         return Response({
             'success': True,
             'data': child.banned_food,
@@ -138,8 +165,9 @@ class BannedFoodView(APIView):
         
         try:
             banned_food = request.data["banned_food"]
-            child = ChildProfile.objects.get(id=child_id)
+            child = ChildProfile.objects.get(user_id=child_id)
             child.banned_food = banned_food
+            child.save()
             serializer = ChildProfileSerializer(child)
             return Response({
                 'success': True,
@@ -165,7 +193,7 @@ class ChildDaysOffView(APIView):
         })
         
     def post(self, request, child_id):
-        child = ChildProfile.objects.get(id=child_id)
+        child = ChildProfile.objects.get(user_id=child_id)
         day = request.data["day"]
         reason = request.data["reason"] 
         day_off = ChildDaysOff.objects.create(child=child, day=day, reason=reason)
