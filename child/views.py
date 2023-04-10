@@ -83,6 +83,18 @@ class ChildView(APIView):
             'message': f"Data for child {child_id} Retrieved Successfully"
         })
 
+    def put(self, request, child_id):
+        child = ChildProfile.objects.get(user_id=child_id)
+        serializer = ChildProfileSerializer(child, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'success': True,
+                'data': serializer.data,
+                'message': f"Data for child {child_id} Updated Successfully"
+            })
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 class ChildWalletList(generics.ListCreateAPIView):
     queryset = ChildWallet.objects.all()
     serializer_class = ChildWalletSerializer
@@ -94,6 +106,21 @@ class ChildWalletList(generics.ListCreateAPIView):
         )
         return wallet
 
+
+
+class ChildListView(generics.ListCreateAPIView):
+    queryset = ChildProfile.objects.all()
+    serializer_class = ChildProfileSerializer 
+    
+    def get_queryset(self, *args, **kwargs):
+        try:
+            child = super().get_queryset(*args, **kwargs).filter(
+            parent__user=self.request.user
+
+        )
+            return child
+        except:
+            return super().get_queryset(*args, **kwargs)
 class ChildWalletView(APIView):
     def get(self, request, child_id):
         wallet = ChildWallet.objects.filter(child_id=child_id)

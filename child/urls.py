@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import register_child, ChildWalletView, ChildView, BannedFoodView, ChildDaysOffView
+from .views import register_child, ChildWalletView, ChildView, BannedFoodView, ChildDaysOffView, ChildListView
 
 
 
 urlpatterns = [
+    path('', ChildListView.as_view(), name='all-childs'),
     path('register/', register_child, name="register-child"),
     path('<int:child_id>', ChildView.as_view(), name="child-view"),
     path('<int:child_id>/wallet', ChildWalletView.as_view(), name="child-wallet-view"),

@@ -8,7 +8,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import SchoolProfileSerializer
-
+from .models import School
 
 @api_view(["POST"])
 def register_school(request):
@@ -70,3 +70,24 @@ def register_school(request):
                 'message': "User object not created"
             }, status=status.HTTP_400_BAD_REQUEST)
 
+class SchoolView(APIView):
+    def get(self, request):
+        school = School.objects.get(user=self.request.user)
+        serializer = SchoolProfileSerializer(school)
+        return Response({
+            'success': True,
+            'data': serializer.data,
+            'message': f"Data for school : {self.request.user.id} Retrieved Successfully"
+        })
+
+    def put(self, request):
+        school = School.objects.get(user=self.request.user)
+        serializer = SchoolProfileSerializer(school, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'success': True,
+                'data': serializer.data,
+                'message': f"Data for school : {self.request.user.id} Updated Successfully"
+            })
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
