@@ -124,4 +124,24 @@ class ParentView(APIView):
             })
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+# class ParentChildIDListView(APIView):
+#     def get(self, request, parent_id):
+#         childs = ChildProfile.objects.filter(parent_id=parent_id)
+#         serializer = ChildProfileSerializer(childs, many=True)
+#         return Response({
+#             'success': True,
+#             'data': serializer.data,
+#             'message': f"Childs  for parent {parent_id} Retrieved Successfully"
+#         })
 
+
+class ParentChildIDListView(generics.ListAPIView):
+    queryset = ChildProfile.objects.all()
+    serializer_class = ChildProfileSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        child = super().get_queryset(*args, **kwargs).filter(
+            parent_id=self.kwargs['parent_id']
+
+        )
+        return child

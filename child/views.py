@@ -115,7 +115,7 @@ class ChildListView(generics.ListCreateAPIView):
     def get_queryset(self, *args, **kwargs):
         try:
             child = super().get_queryset(*args, **kwargs).filter(
-            parent__user=self.request.user
+            school__user=self.request.user
 
         )
             return child

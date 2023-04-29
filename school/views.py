@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import SchoolProfileSerializer
 from .models import School
+from child.models import ChildProfile
+from parent.models import ParentProfile
 
 @api_view(["POST"])
 def register_school(request):
@@ -91,3 +93,17 @@ class SchoolView(APIView):
                 'message': f"Data for school : {self.request.user.id} Updated Successfully"
             })
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class HomeView(APIView):
+    def get(self, request):
+        childs_count = ChildProfile.objects.filter(school__user=self.request.user).count()
+        parents_count = ParentProfile.objects.filter(ChildParent__school__user=self.request.user).count()
+        return Response({
+            'success': True,
+            'data': {
+                "childs_count": childs_count,
+                "parents_count": parents_count
+            },
+            'message': f"Home Data for school : {self.request.user.id} Retrieved Successfully"
+        })
+        
