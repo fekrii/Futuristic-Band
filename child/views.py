@@ -167,6 +167,7 @@ class BannedFoodView(APIView):
             banned_food = request.data["banned_food"]
             child = ChildProfile.objects.get(id=child_id)
             child.banned_food = banned_food
+            child.save()
             serializer = ChildProfileSerializer(child)
             return Response({
                 'success': True,
