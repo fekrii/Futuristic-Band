@@ -135,8 +135,9 @@ class ChildWalletView(APIView):
         
         try:
             amount = request.data["amount"]
-            wallet = ChildWallet.objects.filter(child_id=child_id)
+            wallet = ChildWallet.objects.get(child_id=child_id)
             wallet.amount = amount
+            wallet.save()
             serializer = ChildWalletSerializer(wallet, many=True)
             return Response({
                 'success': True,
